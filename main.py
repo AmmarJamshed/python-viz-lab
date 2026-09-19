@@ -14,13 +14,26 @@ from runner import run_python
 def app_root() -> Path:
     """Project root in dev; folder next to the EXE when frozen."""
     if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent
+
+
+def resource_root() -> Path:
+    """Bundled resources (PyInstaller _MEIPASS) or project root."""
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
         return Path(sys._MEIPASS)  # type: ignore[attr-defined]
     return Path(__file__).resolve().parent
 
 
 ROOT = app_root()
-WEB = ROOT / "web"
-EXAMPLES = ROOT / "examples"
+BUNDLE = resource_root()
+# Prefer editable web/ next to the EXE so UI tweaks apply without a full rebuild.
+WEB = ROOT / "web" if (ROOT / "web" / "index.html").exists() else BUNDLE / "web"
+EXAMPLES = (
+    ROOT / "examples"
+    if (ROOT / "examples").exists()
+    else BUNDLE / "examples"
+)
 
 
 class Api:
@@ -76,14 +89,23 @@ def main() -> int:
         return 1
 
     api = Api()
-    window = webview.create_window(
-        title="Python Viz Lab",
-        url=index.as_uri(),
-        js_api=api,
-        width=1280,
-        height=840,
-        min_size=(900, 600),
-    )
+    icon = WEB / "assets" / "icon.png"
+    window_kwargs: dict = {
+        "title": "Python Viz Lab",
+        "url": index.as_uri(),
+        "js_api": api,
+        "width": 1280,
+        "height": 840,
+        "min_size": (900, 600),
+    }
+    if icon.exists():
+        window_kwargs["icon"] = str(icon)
+
+    try:
+        webview.create_window(**window_kwargs)
+    except TypeError:
+        window_kwargs.pop("icon", None)
+        webview.create_window(**window_kwargs)
     webview.start(debug=False)
     return 0
 

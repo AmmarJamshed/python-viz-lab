@@ -1,6 +1,12 @@
-# Python Viz Lab
+<p align="center">
+  <img src="web/assets/logo.svg" alt="Python Viz Lab" width="96" height="96" />
+</p>
 
-Teach Python by letting beginners **edit real Python** and instantly see how a website, status badge, table, chart, or console changes.
+<h1 align="center">Python Viz Lab</h1>
+
+<p align="center">
+  Teach Python by letting beginners edit real code and instantly see how a website, status, table, chart, or console changes.
+</p>
 
 You choose **any lesson topic** and **any visualization mode**. Their `print()` calls, variables, or `viz.*` helpers drive the live preview.
 

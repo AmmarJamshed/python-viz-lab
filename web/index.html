@@ -4,69 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Python Viz Lab</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app">
-    <header class="top">
-      <div class="brand">
-        <span class="logo">Py</span>
-        <div>
-          <h1>Python Viz Lab</h1>
-          <p>Write Python → pick how it looks → watch the app change</p>
+    <!-- Homepage -->
+    <section id="home" class="home" aria-label="Home">
+      <div class="home-inner">
+        <img class="home-logo" src="assets/logo.svg" width="88" height="88" alt="Python Viz Lab logo" />
+        <h1>Python Viz Lab</h1>
+        <p class="home-tag">
+          Write Python on the left. Watch a real website, chart, or status update on the right.
+        </p>
+        <div class="home-actions">
+          <button type="button" id="openLabBtn" class="btn-primary">Open lab</button>
+          <a class="btn-ghost" href="https://github.com/AmmarJamshed/python-viz-lab" target="_blank" rel="noreferrer">GitHub</a>
         </div>
+        <ul class="home-points">
+          <li>Live preview while you type</li>
+          <li>Switch visualization anytime</li>
+          <li>Built for teaching beginners</li>
+        </ul>
       </div>
-      <div class="top-actions">
-        <label class="field">
-          <span>Example</span>
-          <select id="exampleSelect"></select>
-        </label>
-        <label class="field">
-          <span>Visualize as</span>
-          <select id="vizSelect">
-            <option value="website">Website / checkout</option>
-            <option value="status">Big status</option>
-            <option value="cards">Variable cards</option>
-            <option value="table">Table / list</option>
-            <option value="chart">Bar chart</option>
-            <option value="console">Console only</option>
-            <option value="auto">Auto (best guess)</option>
-          </select>
-        </label>
-        <button id="runBtn" class="primary">Run ▶</button>
-      </div>
-    </header>
+    </section>
 
-    <main class="split">
-      <section class="pane editor-pane">
-        <div class="pane-head">
-          <h2>Your Python</h2>
-          <span class="hint-inline" id="hintText"></span>
-        </div>
-        <textarea id="code" spellcheck="false" autocomplete="off"></textarea>
-        <div class="cheat">
-          <strong>Drive the UI with:</strong>
-          <code>print("Order successful")</code>
-          <code>viz.status("success", "Paid!")</code>
-          <code>viz.set("title", "Shop")</code>
-          <code>viz.items(["A", "B"])</code>
-          <code>viz.chart(["Mon","Tue"], [3,7])</code>
-          or any variables — switch “Visualize as” anytime.
-        </div>
-      </section>
+    <!-- Lab workspace -->
+    <div id="lab" class="lab is-hidden">
+      <header class="toolbar">
+        <button type="button" class="brand brand-btn" id="homeBtn" title="Back to home">
+          <img class="brand-logo" src="assets/logo.svg" width="22" height="22" alt="" />
+          <span class="product">Python Viz Lab</span>
+        </button>
 
-      <section class="pane viz-pane">
-        <div class="pane-head">
-          <h2>Live preview</h2>
-          <span id="runState" class="state idle">Ready</span>
+        <div class="toolbar-controls">
+          <label class="ctrl">
+            <span class="ctrl-label">Lesson</span>
+            <select id="exampleSelect"></select>
+          </label>
+          <label class="ctrl">
+            <span class="ctrl-label">Preview</span>
+            <select id="vizSelect">
+              <option value="website">Website</option>
+              <option value="status">Status</option>
+              <option value="cards">Variables</option>
+              <option value="table">Table</option>
+              <option value="chart">Chart</option>
+              <option value="console">Console</option>
+              <option value="auto">Auto</option>
+            </select>
+          </label>
+          <button id="runBtn" class="btn-run" title="Ctrl+Enter">Run</button>
         </div>
-        <div id="preview" class="preview"></div>
-        <details class="raw">
-          <summary>Raw output</summary>
-          <pre id="rawOut"></pre>
-        </details>
-      </section>
-    </main>
+      </header>
+
+      <main class="workspace">
+        <section class="panel editor-panel">
+          <div class="panel-bar">
+            <div class="tabs">
+              <span class="tab active">checkout.py</span>
+            </div>
+            <span class="hint" id="hintText"></span>
+          </div>
+          <div class="editor-wrap">
+            <pre class="gutter" id="gutter" aria-hidden="true">1</pre>
+            <textarea id="code" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+          </div>
+          <details class="api-ref">
+            <summary>How to drive the preview</summary>
+            <div class="api-body">
+              <p>Assign variables the website reads (<code>customer_name</code>, <code>order_status</code>, <code>final_amount</code>, …) or call helpers:</p>
+              <ul>
+                <li><code>viz.status("success", "Paid")</code></li>
+                <li><code>viz.set("title", "Shop")</code></li>
+                <li><code>viz.items([{ "name": "Tea", "price": 400 }])</code></li>
+                <li><code>viz.chart(["Mon", "Tue"], [3, 7])</code></li>
+              </ul>
+            </div>
+          </details>
+        </section>
+
+        <div class="splitter" aria-hidden="true"></div>
+
+        <section class="panel preview-panel">
+          <div class="panel-bar">
+            <span class="panel-title">Preview</span>
+            <span id="runState" class="run-state idle">Idle</span>
+          </div>
+          <div id="preview" class="preview"></div>
+          <details class="raw">
+            <summary>Runtime payload</summary>
+            <pre id="rawOut"></pre>
+          </details>
+        </section>
+      </main>
+    </div>
   </div>
   <script src="app.js"></script>
 </body>
