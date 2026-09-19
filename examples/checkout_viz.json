@@ -1,0 +1,6 @@
+{
+  "id": "checkout_viz",
+  "title": "Checkout with viz.status",
+  "viz": "website",
+  "hint": "Call viz.status(\"success\", \"…\") to confirm the order"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "score_chart",
+  "title": "Score chart",
+  "viz": "chart",
+  "hint": "Edit the scores dict and re-run — bars update"
+}

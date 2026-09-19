@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python Viz Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <span class="logo">Py</span>
+        <div>
+          <h1>Python Viz Lab</h1>
+          <p>Write Python → pick how it looks → watch the app change</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <label class="field">
+          <span>Example</span>
+          <select id="exampleSelect"></select>
+        </label>
+        <label class="field">
+          <span>Visualize as</span>
+          <select id="vizSelect">
+            <option value="website">Website / checkout</option>
+            <option value="status">Big status</option>
+            <option value="cards">Variable cards</option>
+            <option value="table">Table / list</option>
+            <option value="chart">Bar chart</option>
+            <option value="console">Console only</option>
+            <option value="auto">Auto (best guess)</option>
+          </select>
+        </label>
+        <button id="runBtn" class="primary">Run ▶</button>
+      </div>
+    </header>
+
+    <main class="split">
+      <section class="pane editor-pane">
+        <div class="pane-head">
+          <h2>Your Python</h2>
+          <span class="hint-inline" id="hintText"></span>
+        </div>
+        <textarea id="code" spellcheck="false" autocomplete="off"></textarea>
+        <div class="cheat">
+          <strong>Drive the UI with:</strong>
+          <code>print("Order successful")</code>
+          <code>viz.status("success", "Paid!")</code>
+          <code>viz.set("title", "Shop")</code>
+          <code>viz.items(["A", "B"])</code>
+          <code>viz.chart(["Mon","Tue"], [3,7])</code>
+          or any variables — switch “Visualize as” anytime.
+        </div>
+      </section>
+
+      <section class="pane viz-pane">
+        <div class="pane-head">
+          <h2>Live preview</h2>
+          <span id="runState" class="state idle">Ready</span>
+        </div>
+        <div id="preview" class="preview"></div>
+        <details class="raw">
+          <summary>Raw output</summary>
+          <pre id="rawOut"></pre>
+        </details>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

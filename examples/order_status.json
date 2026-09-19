@@ -1,0 +1,6 @@
+{
+  "id": "order_status",
+  "title": "Order status (print)",
+  "viz": "website",
+  "hint": "Change print(\"pending\") to print(\"Order successful\")"
+}
